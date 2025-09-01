@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Pookalam</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+        }
+        canvas {
+            border: 2px solid #ccc;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pookalamCanvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('pookalamCanvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        // --- Data for the circles (now ordered from smallest to largest) ---
+        const circlesData = [
+            { color: "red", radius: 100, link: "https://tinkerhub.org/@arfan" },
+            { color: "green", radius: 150, link: "https://tinkerhub.org/@seona" },
+            { color: "yellow", radius: 200, link: "https://tinkerhub.org/@priya_roy" },
+            { color: "orange", radius: 250, link: "https://tinkerhub.org/@_angeleena23_" }
+        ];
+
+        // --- Function to draw a filled circle ---
+        function drawCircle(color, radius) {
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        // --- Function to draw the flower ---
+        function drawFlower() {
+            // Draw petals
+            for (let i = 0; i < 12; i++) {
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(i * (Math.PI / 6)); // Rotate in 30-degree increments
+                ctx.beginPath();
+                ctx.arc(50, 0, 10, 0, 2 * Math.PI);
+                ctx.fillStyle = "gold";
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // Draw center of the flower
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        // --- Main drawing sequence ---
+        function drawPookalam() {
+            // Draw circles from largest to smallest for layering
+            const reversedCircles = [...circlesData].reverse();
+            reversedCircles.forEach(circle => {
+                drawCircle(circle.color, circle.radius);
+            });
+            drawFlower();
+        }
+
+        // --- Handle clicks on the canvas ---
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            const distance = Math.sqrt(
+                Math.pow(clickX - centerX, 2) + Math.pow(clickY - centerY, 2)
+            );
+
+            // Now, check which circle was clicked (from smallest to largest)
+            // The first match is the one that was visually clicked
+            for (const circle of circlesData) {
+                if (distance <= circle.radius) {
+                    window.open(circle.link, '_blank');
+                    break;
+                }
+            }
+        });
+
+        drawPookalam();
+    </script>
+</body>
+</html>
