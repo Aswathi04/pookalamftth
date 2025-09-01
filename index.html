@@ -15,8 +15,8 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #A0FFA0;
-            color: #CCCC00; /* Changed font color to a darker yellow */
+            background-color: #C1FFC1; /* A new lighter green background */
+            color: #FFFF00;
             font-family: 'Chela One', cursive;
             text-align: center;
         }
@@ -65,42 +65,3 @@
                 ctx.beginPath();
                 ctx.arc(50, 0, 10, 0, 2 * Math.PI);
                 ctx.fillStyle = "gold";
-                ctx.fill();
-                ctx.restore();
-            }
-
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
-            ctx.fillStyle = "white";
-            ctx.fill();
-        }
-
-        function drawPookalam() {
-            const reversedCircles = [...circlesData].reverse();
-            reversedCircles.forEach(circle => {
-                drawCircle(circle.color, circle.radius);
-            });
-            drawFlower();
-        }
-
-        canvas.addEventListener('click', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const clickY = event.clientY - rect.top;
-
-            const distance = Math.sqrt(
-                Math.pow(clickX - centerX, 2) + Math.pow(clickY - centerY, 2)
-            );
-
-            for (const circle of circlesData) {
-                if (distance <= circle.radius) {
-                    window.open(circle.link, '_blank');
-                    break;
-                }
-            }
-        });
-
-        drawPookalam();
-    </script>
-</body>
-</html>
