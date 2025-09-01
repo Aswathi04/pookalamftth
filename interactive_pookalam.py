@@ -8,24 +8,39 @@ screen.bgcolor("black")
 screen.title("Interactive Pookalam")
 screen.tracer(0) # Turn off screen updates for faster drawing
 
-# --- Main Turtle for Drawing Circles ---
+# --- Main Turtle for Drawing Circles and Flower ---
 main_turtle = turtle.Turtle()
 main_turtle.speed(0)
 main_turtle.hideturtle()
 main_turtle.penup()
 
-# --- Load the Logo ---
-# IMPORTANT:
-# 1. Convert your uploaded image to a GIF format (e.g., using an online converter or image editor).
-# 2. Save the converted GIF file as 'logo_a.gif' in the SAME DIRECTORY as your Python script.
-# If the file is not found or is not a valid GIF, the background will remain black.
-logo_filename = "logo_a.gif"
-try:
-    screen.bgpic(logo_filename)
-    print(f"Logo '{logo_filename}' loaded successfully.")
-except (turtle.TurtleGraphicsError, turtle.TclError):
-    print(f"Warning: Could not load '{logo_filename}'. Please ensure it's a valid GIF and in the script's directory.")
-    print("The Pookalam will be drawn on a black background without the logo.")
+# --- Function to Draw the Flower in the Center ---
+def draw_flower():
+    flower_turtle = turtle.Turtle()
+    flower_turtle.speed(0)
+    flower_turtle.hideturtle()
+    flower_turtle.penup()
+    
+    # Draw petals
+    flower_turtle.color("gold")
+    for _ in range(12):
+        flower_turtle.forward(50)
+        flower_turtle.pendown()
+        flower_turtle.begin_fill()
+        flower_turtle.circle(10)
+        flower_turtle.end_fill()
+        flower_turtle.penup()
+        flower_turtle.backward(50)
+        flower_turtle.right(30)
+    
+    # Draw center of the flower
+    flower_turtle.color("white")
+    flower_turtle.goto(0, -10)
+    flower_turtle.pendown()
+    flower_turtle.begin_fill()
+    flower_turtle.circle(10)
+    flower_turtle.end_fill()
+    flower_turtle.penup()
 
 # --- Function to Draw a Clickable Circle ---
 def draw_clickable_circle(t, color, radius, link):
@@ -59,7 +74,6 @@ def draw_clickable_circle(t, color, radius, link):
     click_handler_turtle.onclick(open_link)
 
 # --- Define Circle Parameters ---
-# (color, radius, link)
 circles_data = [
     ("red", 100, "https://tinkerhub.org/@arfan"),
     ("green", 150, "https://tinkerhub.org/@seona"),
@@ -67,10 +81,8 @@ circles_data = [
     ("orange", 250, "https://tinkerhub.org/@_angeleena23_")
 ]
 
-# --- Draw the Circles ---
-# Starting point for the first circle's radius calculation.
-# The logo is at the center, so the first circle's bottom edge will be at -radius.
-# The radius values are cumulative for concentric circles.
+# --- Main Drawing Sequence ---
+draw_flower() # Draw the flower first
 for color, radius, link in circles_data:
     draw_clickable_circle(main_turtle, color, radius, link)
 
