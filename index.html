@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TH VJCET ka pookals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
-            flex-direction: column; /* Use column to stack items */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #E6FFE6; /* Light green background */
-            color: black; /* Text color remains black for contrast */
-            font-family: "Times New Roman", Times, serif; /* Font remains Times New Roman */
+            background-color: #E6FFE6;
+            color: #DAA520; /* Changed font color to Dark Goldenrod */
+            font-family: 'Sacramento', cursive; /* Changed font to Sacramento */
             text-align: center;
         }
         canvas {
@@ -68,12 +71,11 @@
 
             ctx.beginPath();
             ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
-            ctx.fillStyle = "white"; // Flower center remains white for contrast
+            ctx.fillStyle = "white";
             ctx.fill();
         }
 
         function drawPookalam() {
-            // Draw circles from largest to smallest for layering
             const reversedCircles = [...circlesData].reverse();
             reversedCircles.forEach(circle => {
                 drawCircle(circle.color, circle.radius);
