@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TH VJCET ka pookals</title> <style>
+    <title>TH VJCET ka pookals</title>
+    <style>
         body {
             display: flex;
             flex-direction: column; /* Use column to stack items */
@@ -11,9 +12,9 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: black;
-            color: white; /* Make text visible on black background */
-            font-family: sans-serif;
+            background-color: white; /* Changed background to white */
+            color: black; /* Changed text color to black for contrast */
+            font-family: "Times New Roman", Times, serif; /* Changed font to Times New Roman */
             text-align: center;
         }
         canvas {
@@ -29,7 +30,9 @@
     </style>
 </head>
 <body>
-    <h1>TH VJCET ka pookals</h1> <p>click each circle to view each poov :)</p> <canvas id="pookalamCanvas" width="500" height="500"></canvas>
+    <h1>TH VJCET ka pookals</h1>
+    <p>click each circle to view each poov :)</p>
+    <canvas id="pookalamCanvas" width="500" height="500"></canvas>
 
     <script>
         const canvas = document.getElementById('pookalamCanvas');
@@ -65,11 +68,12 @@
 
             ctx.beginPath();
             ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "white"; // Flower center remains white for contrast
             ctx.fill();
         }
 
         function drawPookalam() {
+            // Draw circles from largest to smallest for layering
             const reversedCircles = [...circlesData].reverse();
             reversedCircles.forEach(circle => {
                 drawCircle(circle.color, circle.radius);
