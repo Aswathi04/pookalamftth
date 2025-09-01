@@ -15,14 +15,15 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #C1FFC1; /* A new lighter green background */
-            color: #FFFF00;
+            background-color: #E0FFE0; /* Very light green for the page background */
+            color: #2E8B57; /* Slightly darker green for the font color */
             font-family: 'Chela One', cursive;
             text-align: center;
         }
         canvas {
-            border: 2px solid #ccc;
-            border-radius: 50%;
+            border: 2px solid #ccc; /* Border around the canvas */
+            border-radius: 50%; /* Make the canvas area itself round if preferred */
+            background-color: transparent; /* Ensure canvas background doesn't cover body background */
         }
         h1 {
             margin-bottom: 5px;
@@ -65,3 +66,43 @@
                 ctx.beginPath();
                 ctx.arc(50, 0, 10, 0, 2 * Math.PI);
                 ctx.fillStyle = "gold";
+                ctx.fill();
+                ctx.restore();
+            }
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = "white"; // Flower center remains white for contrast
+            ctx.fill();
+        }
+
+        function drawPookalam() {
+            // Draw circles from largest to smallest for layering
+            const reversedCircles = [...circlesData].reverse();
+            reversedCircles.forEach(circle => {
+                drawCircle(circle.color, circle.radius);
+            });
+            drawFlower();
+        }
+
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            const distance = Math.sqrt(
+                Math.pow(clickX - centerX, 2) + Math.pow(clickY - centerY, 2)
+            );
+
+            for (const circle of circlesData) {
+                if (distance <= circle.radius) {
+                    window.open(circle.link, '_blank');
+                    break;
+                }
+            }
+        });
+
+        drawPookalam();
+    </script>
+</body>
+</html>
